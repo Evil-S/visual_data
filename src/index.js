@@ -1,7 +1,9 @@
 import VdButton from './components/test-button/index';
+import VdSlidePanel from './components/VdSlidePanel/index';
 
 const components = [
-  VdButton
+  VdButton,
+  VdSlidePanel
 ];
 
 const install = function (Vue, opts = {}) {
@@ -16,5 +18,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export default {
   install,
-  VdButton
+  VdButton,
+  VdSlidePanel
 }
