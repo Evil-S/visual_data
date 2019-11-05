@@ -1,4 +1,4 @@
-# visual_data
+# visual-data-ui
 
 > 数据可视化组件库
 
@@ -6,13 +6,11 @@
 
 ``` bash
 # install dependencies
-npm install
+npm install visual-data-ui
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
+# main.js
+import VisualDataUi from 'visual-data-ui';
+Vue.use(VisualDataUi);
 ```
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).

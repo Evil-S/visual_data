@@ -1,8 +1,8 @@
-import TestButton from './components/test-button/index';
+import VdButton from './components/test-button/index';
 
-const components = {
-  TestButton
-};
+const components = [
+  VdButton
+];
 
 const install = function (Vue, opts = {}) {
   components.map(component => {
@@ -16,5 +16,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export default {
   install,
-  TestButton
+  VdButton
 }

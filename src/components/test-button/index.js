@@ -1,3 +1,3 @@
-import TestButton from './test-button';
-TestButton.install = Vue => Vue.component(TestButton.name,TestButton);
-export default TestButton
+import VdButton from './test-button';
+VdButton.install = Vue => Vue.component(VdButton.name,VdButton);
+export default VdButton
