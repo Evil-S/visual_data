@@ -1,12 +1,16 @@
-var path = require('path')
-var webpack = require('webpack')
-
+const path = require('path');
+const webpack = require('webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    // filename: 'build.js',
+    filename: 'index.js',
+    library: 'visualData',
+    libraryTarget: 'umd',
+    umdNamedDefine: true
   },
   module: {
     rules: [
@@ -84,12 +88,15 @@ module.exports = {
     hints: false
   },
   devtool: '#eval-source-map'
-}
+};
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
+  module.exports.entry = './src/index.js';
+  module.exports.devtool = '#source-map';
+
   module.exports.plugins = (module.exports.plugins || []).concat([
+    // http://vue-loader.vuejs.org/en/workflow/production.html
+    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
