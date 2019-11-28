@@ -1,142 +1,159 @@
 <template>
-    <div class="vd-slide-panel-wrapper" :style="positionStyle">
+  <div class="vd-slide-panel-wrapper" :style="[positionStyle,statusStyle]">
+    <div class="slide-content" :style="statusStyle">
       <slot name="content"></slot>
-      <div class="panel-toggle-button">></div>
     </div>
+    <div class="panel-toggle-button" :class="buttonPosition" @click="handleTogglePanel">
+      <slot name="toggleButton"></slot>
+    </div>
+  </div>
 </template>
 
 <script>
     export default {
         name: "VdSlidePanel",
-        props:{
-            direction: {
-                type: String,
-                default: 'left'
-            },
-            left: {
-                type: Number
-            },
-            top: {
-                type: Number
-            },
-            right: {
-                type: Number
-            },
-            bottom: {
-                type: Number
+        data() {
+            return {
+                open: this.defaultStatus
             }
         },
-        computed:{
-            positionStyle(){
+        props: {
+            width: {
+                type: Number | String,
+                default: 'auto'
+            },
+            height: {
+                type: Number | String,
+                default: 'auto'
+            },
+            defaultStatus: {
+                type: Boolean,
+                default: true
+            },
+            buttonPosition: {
+                type: String,
+            },
+            direction: {
+                type: String,
+                default: 'toLeft'
+            },
+            left: {
+                type: Number | String
+            },
+            top: {
+                type: Number | String
+            },
+            right: {
+                type: Number | String
+            },
+            bottom: {
+                type: Number | String
+            }
+        },
+        computed: {
+            positionStyle() {
                 let style = {};
                 // 判断传入的定位值
-                if(this.left||this.left === 0){
-                    style = Object.assign(style,{left: this.left+'px'})
+                if (this.left || this.left === 0) {
+                    if (typeof this.left === "number") {
+                        style = Object.assign(style, {left: this.left + 'px'})
+                    } else {
+                        style = Object.assign(style, {left: this.left})
+                    }
                 }
-                if(this.right||this.right === 0){
-                    style = Object.assign(style,{right: this.right+'px'})
+                if (this.right || this.right === 0) {
+                    if (typeof this.right === "number") {
+                        style = Object.assign(style, {right: this.right + 'px'})
+                    } else {
+                        style = Object.assign(style, {right: this.right})
+                    }
                 }
-                if(this.top||this.top === 0){
-                    style = Object.assign(style,{top: this.top+'px'})
+                if (this.top || this.top === 0) {
+                    if (typeof this.top === "number") {
+                        style = Object.assign(style, {top: this.top + 'px'})
+                    } else {
+                        style = Object.assign(style, {top: this.top})
+                    }
                 }
-                if(this.bottom||this.bottom === 0){
-                    style = Object.assign(style,{bottom: this.bottom+'px'})
+                if (this.bottom || this.bottom === 0) {
+                    if (typeof this.bottom === "number") {
+                        style = Object.assign(style, {bottom: this.bottom + 'px'})
+                    } else {
+                        style = Object.assign(style, {bottom: this.bottom})
+                    }
                 }
                 console.log(style);
                 return style
+            },
+            statusStyle() {
+                if (this.direction === "vertical") {
+                    return {
+                        height: this.open ? this.height : 0
+                    }
+                } else {
+                    if (this.direction !== "horizontal") {
+                        console.log('the value of direction not correct!')
+                    }
+                    return {
+                        width: this.open ? this.width : 0
+                    };
+                }
+            }
+        },
+        methods: {
+            handleTogglePanel() {
+                this.open = !this.open
             }
         }
     }
 </script>
 
 <style scoped lang="sass">
-.vd-slide-panel-wrapper
-  position: absolute
-  transition: width .33s,height .33s
-  .panel-toggle-button
+  .vd-slide-panel-wrapper
     position: absolute
-    width: 24px
-    height: 64px
-    text-align: center
-    line-height: 64px
-    background-color: aqua
-    cursor: pointer
-    &.left
-      &-center
-        left: -24px
-        top: 50%
-        margin-top: -32px
-      &-top
-        left: -24px
+    transition: width .33s, height .33s
+
+    .slide-content
+      transition: width .33s, height .33s
+      overflow: hidden
+
+    .panel-toggle-button
+      position: absolute
+      text-align: center
+      line-height: 64px
+      background-color: aqua
+      cursor: pointer
+      &.left
+        &-center
+          left: 0
+          top: 50%
+
+        &-top
+          left: 0
+          top: 0
+
+        &-bottom
+          left: 0
+          bottom: 0
+
+      &.right
+        &-center
+          right: 0
+          top: 50%
+
+        &-top
+          right: 0
+          top: 0
+
+        &-bottom
+          right: 0
+          bottom: 0
+
+      &.top-center
         top: 0
-        &-top-16
-          left: -24px
-          top: 16px
-      &-bottom
-        left: -24px
-        bottom: 0
-        &-16
-          left: -24px
-          bottom: 16px
-    &.right
-      &-center
-        right: -24px
-        top: 50%
-        margin-top: -32px
-      &-top
-        right: -24px
-        top: 0
-        &-16
-          right: -24px
-          top: 16px
-      &-bottom
-        right: -24px
-        bottom: 0
-        &-16
-          right: -24px
-          bottom: 16px
-    &.top
-      &-center
-        top: -44px
         left: 50%
-        transform: rotate(90deg)
-        margin-left: -12px
-      &-left
-        top: -44px
-        left: 20px
-        transform: rotate(90deg)
-        &-16
-          top: -44px
-          left: 36px
-          transform: rotate(90deg)
-      &-right
-        top: -44px
-        right: 20px
-        transform: rotate(90deg)
-        &-16
-          top: -44px
-          right: 36px
-          transform: rotate(90deg)
-    &.bottom
-      &-center
-        bottom: -44px
+
+      &.bottom-center
+        bottom: 0
         left: 50%
-        margin-left: -12px
-        transform: rotate(-90deg)
-      &-left
-        bottom: -44px
-        left: 20px
-        transform: rotate(-90deg)
-        &-16
-          bottom: -44px
-          left: 36px
-          transform: rotate(-90deg)
-      &-right
-        bottom: -44px
-        right: 20px
-        transform: rotate(-90deg)
-        &-16
-          bottom: -44px
-          right: 36px
-          transform: rotate(-90deg)
 </style>
