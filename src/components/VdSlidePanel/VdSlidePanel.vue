@@ -112,7 +112,7 @@
   .vd-slide-panel-wrapper
     position: absolute
     transition: width .33s, height .33s
-
+    z-index: 9
     .slide-content
       transition: width .33s, height .33s
       overflow: hidden

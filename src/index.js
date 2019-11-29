@@ -1,9 +1,11 @@
 import VdButton from './components/test-button/index';
 import VdSlidePanel from './components/VdSlidePanel/index';
+import VdScrollNumber from './components/VdScrollNumber/index';
 
 const components = [
   VdButton,
-  VdSlidePanel
+  VdSlidePanel,
+  VdScrollNumber
 ];
 
 const install = function (Vue, opts = {}) {
